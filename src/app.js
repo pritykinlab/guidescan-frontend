@@ -150,11 +150,15 @@ const QueryState = {
 
 function App() {
     const [webversion, setWebVersion] = useState("");
+    const [cliversion, setCliVersion] = useState("");
     const [queryState, updateQueryState] = useState(QueryState.NOT_SUBMITTED);
     const navigate = useNavigate();
 
     useEffect(() => {
-        getInfoSupported((response) => setWebVersion(response.data["version"]))
+        getInfoSupported((response) => {
+            setWebVersion(response.data["version"]);
+            setCliVersion(response.data["cli-version"]);
+        })
     }, []);
 
     function handleSuccessfulQuery(response) {
@@ -204,7 +208,7 @@ function App() {
         {failureToast}
         <footer className="footer mt-auto py-3">
           <div className="container justify-content-center text-center">
-            <span className="text-muted">Guidescan Web v{webversion}, Frontend v{packageInfo.version}</span>
+            <span className="text-muted">Guidescan Frontend v{packageInfo.version}, Web v{webversion}, CLI v{cliversion}</span>
           </div>
         </footer>
       </div>
