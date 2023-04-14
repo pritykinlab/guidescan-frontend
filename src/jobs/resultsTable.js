@@ -126,7 +126,7 @@ function floatFormatter(precision) {
   return f;
 }
 
-function offTargetCoordinatesFormatter(cell, row) {
+function offTargetCoordinatesFormatter(cell, row, rowIndex, { organism }) {
   let startPosition = null;
   let endPosition = null;
   const direction = cell.direction === "positive" ? "+" : "-";
@@ -139,20 +139,26 @@ function offTargetCoordinatesFormatter(cell, row) {
     startPosition = endPosition - 23;
   }
 
-  return 'chr' + cell.chromosome + ":" + startPosition + "-" + endPosition + ":" + direction;
+  const linkText = `chr${cell.chromosome}:${startPosition}-${endPosition}:${direction}`;
+  const linkUrl = `https://igv.org/app/?genome=${organism}&locus=${linkText}`;
+
+  return <a target="_blank" href={linkUrl}>{linkText}</a>;
 }
 
-const OffTargetResultsTableColumns =
-      [{
+const OffTargetResultsTableColumns = (organism) => {
+    return [{
         dataField: 'coords',
         text: 'coordinates',
         sort: true,
         formatter: offTargetCoordinatesFormatter,
-      }, {
+        formatExtraData: {organism: organism}
+    }, {
         dataField: 'distance',
         text: 'distance',
         sort: true,
-      }];
+    }];
+}
+
 
 function OffTargetModal(props) {
   const [show, setShow] = React.useState(false);
@@ -161,6 +167,8 @@ function OffTargetModal(props) {
   const handleShow = () => setShow(true);
 
   var offTargets = props.gRNA["off-targets"] || [];
+  const organism = props.organism;
+
   offTargets = offTargets.map((off_target, index) => {
     return {
       id: index,
@@ -191,7 +199,7 @@ function OffTargetModal(props) {
         </Modal.Header>
         <Modal.Body>
           <BootstrapTable keyField='id' data={offTargets}
-                          striped={true} columns={OffTargetResultsTableColumns}
+                          striped={true} columns={OffTargetResultsTableColumns(organism)}
                           pagination={paginationFactory()} />
         </Modal.Body>
         <Modal.Footer>
@@ -204,71 +212,75 @@ function OffTargetModal(props) {
   );
 }
 
-function offTargetFormatter(cell, row) {
-    return <OffTargetModal gRNA={row}/>;
+function offTargetFormatter(organism) {
+    return function (cell, row) {
+        return <OffTargetModal gRNA={row} organism={organism}/>;
+    }
 }
 
-const JobResultsTableColumns = 
-  [{
-    dataField: 'coordinate',
-    text: 'coordinate',
-    sort: true
-  }, {
-    dataField: 'sequence',
-    text: 'sequence',
-    sort: true
-  }, {
-    dataField: 'num-off-targets',
-    text: 'num-off-targets',
-    sort: true,
-  }, {
-    dataField: 'off-target-summary',
-    text: 'off-target-summary',
-    formatter: offTargetFormatter
-  }, {
-    dataField: 'cutting-efficiency',
-    text: 'cutting-efficiency',
-    sort: true,
-    formatter: floatFormatter(2),
-  }, {
-    dataField: 'specificity',
-    text: 'specificity',
-    sort: true,
-    formatter: floatFormatter(2),
-  }, {
-    dataField: 'annotations',
-    text: 'annotations',
-    sort: true
-  }];
+const JobResultsTableColumns = (organism) => {
+    return [{
+        dataField: 'coordinate',
+        text: 'coordinate',
+        sort: true
+    }, {
+        dataField: 'sequence',
+        text: 'sequence',
+        sort: true
+    }, {
+        dataField: 'num-off-targets',
+        text: 'num-off-targets',
+        sort: true,
+    }, {
+        dataField: 'off-target-summary',
+        text: 'off-target-summary',
+        formatter: offTargetFormatter(organism)
+    }, {
+        dataField: 'cutting-efficiency',
+        text: 'cutting-efficiency',
+        sort: true,
+        formatter: floatFormatter(2),
+    }, {
+        dataField: 'specificity',
+        text: 'specificity',
+        sort: true,
+        formatter: floatFormatter(2),
+    }, {
+        dataField: 'annotations',
+        text: 'annotations',
+        sort: true
+    }];
+}
 
-const GrnaJobResultsTableColumns = 
-  [{
-    dataField: 'coordinate',
-    text: 'coordinate',
-    sort: true
-  }, {
-    dataField: 'sequence',
-    text: 'gRNA',
-    sort: true
-  }, {
-    dataField: 'num-off-targets',
-    text: 'num-off-targets',
-    sort: true,
-  }, {
-    dataField: 'off-target-summary',
-    text: 'off-target-summary',
-    formatter: offTargetFormatter
-  }, {
-    dataField: 'cutting-efficiency',
-    text: 'cutting-efficiency',
-    sort: true,
-    formatter: floatFormatter(2),
-  }, {
-    dataField: 'specificity',
-    text: 'specificity',
-    sort: true,
-    formatter: floatFormatter(2),
-  }];
+const GrnaJobResultsTableColumns = (organism) => {
+    return [{
+        dataField: 'coordinate',
+        text: 'coordinate',
+        sort: true
+    }, {
+        dataField: 'sequence',
+        text: 'gRNA',
+        sort: true
+    }, {
+        dataField: 'num-off-targets',
+        text: 'num-off-targets',
+        sort: true,
+    }, {
+        dataField: 'off-target-summary',
+        text: 'off-target-summary',
+        formatter: offTargetFormatter(organism)
+    }, {
+        dataField: 'cutting-efficiency',
+        text: 'cutting-efficiency',
+        sort: true,
+        formatter: floatFormatter(2),
+    }, {
+        dataField: 'specificity',
+        text: 'specificity',
+        sort: true,
+        formatter: floatFormatter(2),
+    }];
+}
 
 const BadGrnaJobResultsTableColumns = 
   [{
@@ -288,6 +300,7 @@ const JobResultsState = {
 
 function JobResultsTable(props) {
     let page = null;
+    const organism = props.organism;
 
     switch (props.resultsState) {
     case JobResultsState.RECEIVED:
@@ -304,7 +317,7 @@ function JobResultsTable(props) {
               </h4>
               <BootstrapTable keyField='sequence' data={queryResult[1]}
                               striped={true}
-                              columns={JobResultsTableColumns}
+                              columns={JobResultsTableColumns(organism)}
                               pagination={paginationFactory()} />
             </React.Fragment>
           );
@@ -330,7 +343,7 @@ function JobResultsTable(props) {
 
 function GrnaJobResultsTable(props) {
     let page = null;
-
+    const organism = props.organism;
     switch (props.resultsState) {
     case JobResultsState.RECEIVED:
         let gRNAs = JSON.parse(JSON.stringify(props.results)); // Works because data comes from JSON endpoint
@@ -355,7 +368,7 @@ function GrnaJobResultsTable(props) {
                 </h4>
                 <BootstrapTable keyField='sequence' data={goodGrnas}
                 striped={true}
-                columns={GrnaJobResultsTableColumns}/>
+                columns={GrnaJobResultsTableColumns(organism)}/>
                 {((badGrnas.length > 0) ? (
                             <>
                             <h4 style={{margin: "1.5em 0 1em 0.5em", fontStyle: "italic"}}>

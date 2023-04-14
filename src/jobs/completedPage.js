@@ -38,15 +38,16 @@ function JobCompletedPage(props) {
 
     useEffect(() => {
         function onLoadSuccess(response) {
-            updateResults(response.data);
-            updateResultsState(JobResultsState.RECEIVED);
-
             if (props.jobType === "standard") {
                 updateOrganism(response.data[0][0].organism);
                 const genomicRegion = response.data[0][0];
                 const defaultCoordsString = genomicRegion["chromosome-name"] + ":" + genomicRegion["coords"][1] + "-" + genomicRegion["coords"][2];
                 updateCoords(defaultCoordsString);
+            } else if (props.jobType == "grna") {
+                updateOrganism(response.data[0].organism);
             }
+            updateResults(response.data);
+            updateResultsState(JobResultsState.RECEIVED);
         }
 
         function onLoadFailure(response) {
@@ -90,7 +91,7 @@ function JobCompletedPage(props) {
     if (!show_results) {
       if (props.jobType === "grna") {
         rendering = (
-          <GrnaJobResultsTable id={props.id} resultsState={results_state} results={results}/>
+          <GrnaJobResultsTable id={props.id} organism={organism} resultsState={results_state} results={results}/>
         );
       } else if (props.jobType === "library") {
         rendering = null;
@@ -103,7 +104,7 @@ function JobCompletedPage(props) {
               ) : null
             }
             <hr/> 
-            <JobResultsTable id={props.id} resultsState={results_state} results={results}/>
+            <JobResultsTable id={props.id} organism={organism} resultsState={results_state} results={results}/>
           </>
         );
       }
