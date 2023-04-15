@@ -139,6 +139,14 @@ function DownloadsPage() {
       <td><a href="/databases/cas9/hg38.bam.sorted">hg38</a></td>
       </tr>
       <tr>
+      <th scope="row">3</th>
+      <td>Human</td>
+      <td>hg38_no_alt</td>
+      <td>cas9</td>
+      <td>GCF_000001405.39</td>
+      <td><a href="/databases/cas9/hg38_no_alt.bam.sorted">hg38_no_alt</a></td>
+      </tr>
+      <tr>
       <th scope="row">4</th>
       <td>House Mouse</td>
       <td>mm10</td>
@@ -153,6 +161,14 @@ function DownloadsPage() {
       <td>cas9</td>
       <td>GCF_000001635.26</td>
       <td><a href="/databases/cas9/mm10.bam.sorted">mm10</a></td>
+      </tr>
+      <tr>
+      <th scope="row">5</th>
+      <td>House Mouse</td>
+      <td>mm10_no_alt</td>
+      <td>cas9</td>
+      <td>GCF_000001635.26</td>
+      <td><a href="/databases/cas9/mm10_no_alt.bam.sorted">mm10_no_alt</a></td>
       </tr>
       <tr>
       <th scope="row">6</th>
