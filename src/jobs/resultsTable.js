@@ -127,22 +127,28 @@ function floatFormatter(precision) {
 }
 
 function offTargetCoordinatesFormatter(cell, row, rowIndex, { organism }) {
-  let startPosition = null;
-  let endPosition = null;
-  const direction = cell.direction === "positive" ? "+" : "-";
-  
-  if (direction === "+") {
-    startPosition = cell.position;
-    endPosition   = startPosition + 23;
-  } else {
-    endPosition   = cell.position;
-    startPosition = endPosition - 23;
-  }
+    let startPosition = null;
+    let endPosition = null;
+    const direction = cell.direction === "positive" ? "+" : "-";
 
-  const linkText = `chr${cell.chromosome}:${startPosition}-${endPosition}:${direction}`;
-  const linkUrl = `https://igv.org/app/?genome=${organism}&locus=${linkText}`;
+    if (direction === "+") {
+        /* For + strand, position denotes the (0-indexed, inclusive) end of the match
+           Convert this to (1-indexed, inclusive) */
+        endPosition = cell.position + 1;
+        /* The start index (1-indexed, inclusive) is end - len(seq_including_pam) + 1 */
+        startPosition = endPosition - 22;
+    } else {
+        /* For - strand, position denotes the (0-indexed, inclusive) start of the match
+           Convert this to (1-indexed, inclusive) */
+        startPosition = cell.position + 1;
+        /* The end index (1-indexed, inclusive) is start + len(seq_including_pam) - 1 */
+        endPosition = startPosition + 22;
+    }
 
-  return <a target="_blank" href={linkUrl}>{linkText}</a>;
+    const linkText = `chr${cell.chromosome}:${startPosition}-${endPosition}:${direction}`;
+    const linkUrl = `https://igv.org/app/?genome=${organism}&locus=${linkText}`;
+
+    return <a target="_blank" href={linkUrl}>{linkText}</a>;
 }
 
 const OffTargetResultsTableColumns = (organism) => {
