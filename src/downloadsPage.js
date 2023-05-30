@@ -139,7 +139,7 @@ function DownloadsPage() {
       <td><a href="/databases/cas9/hg38.bam.sorted">hg38</a></td>
       </tr>
       <tr>
-      <th scope="row">3</th>
+      <th scope="row">4</th>
       <td>Human</td>
       <td>hg38_no_alt</td>
       <td>cas9</td>
@@ -147,7 +147,15 @@ function DownloadsPage() {
       <td><a href="/databases/cas9/hg38_no_alt.bam.sorted">hg38_no_alt</a></td>
       </tr>
       <tr>
-      <th scope="row">4</th>
+      <th scope="row">5</th>
+      <td>Human</td>
+      <td>t2t_chm13</td>
+      <td>cas9</td>
+      <td>GCF_009914755.1</td>
+      <td><a href="/databases/cas9/t2t_chm13.bam.sorted">t2t_chm13</a></td>
+      </tr>
+      <tr>
+      <th scope="row">6</th>
       <td>House Mouse</td>
       <td>mm10</td>
       <td>cpf1</td>
@@ -155,7 +163,7 @@ function DownloadsPage() {
       <td><a href="/databases/cpf1/mm10.bam.sorted">mm10</a></td>
       </tr>
       <tr>
-      <th scope="row">5</th>
+      <th scope="row">7</th>
       <td>House Mouse</td>
       <td>mm10</td>
       <td>cas9</td>
@@ -163,7 +171,7 @@ function DownloadsPage() {
       <td><a href="/databases/cas9/mm10.bam.sorted">mm10</a></td>
       </tr>
       <tr>
-      <th scope="row">5</th>
+      <th scope="row">8</th>
       <td>House Mouse</td>
       <td>mm10_no_alt</td>
       <td>cas9</td>
@@ -171,7 +179,7 @@ function DownloadsPage() {
       <td><a href="/databases/cas9/mm10_no_alt.bam.sorted">mm10_no_alt</a></td>
       </tr>
       <tr>
-      <th scope="row">6</th>
+      <th scope="row">9</th>
       <td>House Mouse</td>
       <td>mm39</td>
       <td>cas9</td>
@@ -179,7 +187,7 @@ function DownloadsPage() {
       <td><a href="/databases/cas9/mm39.bam.sorted">mm39</a></td>
       </tr>
       <tr>
-      <th scope="row">7</th>
+      <th scope="row">10</th>
       <td>Baker's Yeast</td>
       <td>sacCer3</td>
       <td>cas9</td>
@@ -187,7 +195,7 @@ function DownloadsPage() {
       <td><a href="/databases/cas9/sacCer3.bam.sorted">sacCer3</a></td>
       </tr>
       <tr>
-      <th scope="row">8</th>
+      <th scope="row">11</th>
       <td>Norway Rat</td>
       <td>rn6</td>
       <td>cas9</td>
@@ -195,7 +203,7 @@ function DownloadsPage() {
       <td><a href="/databases/cas9/rn6.bam.sorted">rn6</a></td>
       </tr>
       <tr>
-      <th scope="row">9</th>
+      <th scope="row">12</th>
       <td>Nematode</td>
       <td>ce11</td>
       <td>cpf1</td>
@@ -203,7 +211,7 @@ function DownloadsPage() {
       <td><a href="/databases/cpf1/ce11.bam.sorted">ce11</a></td>
       </tr>
       <tr>
-      <th scope="row">10</th>
+      <th scope="row">13</th>
       <td>Nematode</td>
       <td>ce11</td>
       <td>cas9</td>
