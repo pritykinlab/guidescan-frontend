@@ -60,7 +60,17 @@ function CitationBox() {
 
           <i>
             bioRxiv
-          </i>&#44; https://doi.org/10.1101/2022.05.02.490368.  
+          </i>&#44; <a href="https://doi.org/10.1101/2022.05.02.490368">https://doi.org/10.1101/2022.05.02.490368</a>.  
+        </p>
+        <hr/>
+        <p style={{fontSize: "1.15em"}}>
+          Schmidt, H., Zhang, M., Chakarov, D. et al.
+          <br/>
+
+          Genome-wide CRISPR guide RNA design and specificity analysis with GuideScan2. Genome Biol 26, 41 (2025).
+          <br/>
+
+          <a href="https://doi.org/10.1186/s13059-025-03488-8">https://doi.org/10.1186/s13059-025-03488-8</a>
         </p>
       </Card>
     </Container>
